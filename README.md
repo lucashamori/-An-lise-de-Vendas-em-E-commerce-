@@ -36,15 +36,13 @@ O projeto é estruturado em várias etapas, que são detalhadas abaixo:
 Visualização Inicial do Dataset
 Exibimos as primeiras linhas e as informações gerais do dataset para entender melhor sua estrutura.
 
-python
-Copiar código
+'''python
 data.head()
 data.info()
 Limpeza de Dados
 Verificamos e tratamos valores ausentes e duplicados. Também garantimos que os nomes das colunas estejam limpos, sem espaços adicionais.
 
-python
-Copiar código
+'''python
 data.isnull().sum()  # Verificar valores ausentes
 data.duplicated().sum()  # Verificar valores duplicados
 data = data.drop_duplicates()  # Remover duplicados
@@ -52,28 +50,24 @@ data.columns = data.columns.str.strip()  # Remover espaços nas colunas
 Ajuste de Formatos de Colunas
 Convertimos as colunas de data para o formato datetime para garantir que possamos manipulá-las corretamente.
 
-python
-Copiar código
+'''python
 data['Purchase_Date'] = pd.to_datetime(data['Purchase_Date'], format='%d-%m-%Y')
 Análise de Receita por Categoria e Forma de Pagamento
 Agrupamos os dados por categoria de produto e forma de pagamento para calcular a receita total.
 
-python
-Copiar código
+'''python
 categoria_receita = data.groupby('Category')['Final_Price(Rs.)'].sum().sort_values(ascending=False)
 metodos_pagamento_receita = data.groupby('Payment_Method')['Final_Price(Rs.)'].sum().sort_values(ascending=False)
 Visualizações
 Criamos gráficos para visualização da receita por categoria e por método de pagamento, além da receita mensal.
 
-python
-Copiar código
+'''python
 categoria_receita.plot(kind='bar', color='skyblue', figsize=(10, 6))
 metodos_pagamento_receita.plot(kind='bar', color='lightgreen', figsize=(10, 6))
 Cálculo da Receita Mensal
 Calculamos a receita mensal, agrupando os dados por mês e somando as vendas.
 
-python
-Copiar código
+'''python
 data['Month'] = data['Purchase_Date'].dt.to_period('M')
 receita_mensal = data.groupby('Month')['Final_Price(Rs.)'].sum()
 receita_mensal.plot(kind='line', color='orange', figsize=(10, 6))
