@@ -1,7 +1,3 @@
-# -Análise-de-Vendas-em-E-commerce-
-"Análise de Tendências de Vendas em E-commerce: Como Categoria e Pagamento Impactam a Receita" Estudo realizado para aprendizado de análise de dados.
-
-
 # Análise de Vendas em E-commerce
 
 ## Descrição
@@ -24,50 +20,57 @@ Este projeto tem como objetivo realizar uma análise exploratória dos dados de 
 
 O projeto é estruturado em várias etapas, que são detalhadas abaixo:
 
-1. **Carregar as Bibliotecas e o Dataset**  
-   Inicializamos as bibliotecas necessárias e carregamos o dataset CSV.
+### 1. Carregar as Bibliotecas e o Dataset
 
-   ```python
-   import pandas as pd
-   import matplotlib.pyplot as plt
+Inicializamos as bibliotecas necessárias e carregamos o dataset CSV.
 
-   # Carregar o dataset
-   data = pd.read_csv('ecommerce_dataset_updated.csv')
-Visualização Inicial do Dataset
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Carregar o dataset
+data = pd.read_csv('ecommerce_dataset_updated.csv')
+2. Visualização Inicial do Dataset
 Exibimos as primeiras linhas e as informações gerais do dataset para entender melhor sua estrutura.
 
-'''python
+python
+Copiar código
 data.head()
 data.info()
-Limpeza de Dados
+3. Limpeza de Dados
 Verificamos e tratamos valores ausentes e duplicados. Também garantimos que os nomes das colunas estejam limpos, sem espaços adicionais.
 
-'''python
+python
+Copiar código
 data.isnull().sum()  # Verificar valores ausentes
 data.duplicated().sum()  # Verificar valores duplicados
 data = data.drop_duplicates()  # Remover duplicados
 data.columns = data.columns.str.strip()  # Remover espaços nas colunas
-Ajuste de Formatos de Colunas
+4. Ajuste de Formatos de Colunas
 Convertimos as colunas de data para o formato datetime para garantir que possamos manipulá-las corretamente.
 
-'''python
+python
+Copiar código
 data['Purchase_Date'] = pd.to_datetime(data['Purchase_Date'], format='%d-%m-%Y')
-Análise de Receita por Categoria e Forma de Pagamento
+5. Análise de Receita por Categoria e Forma de Pagamento
 Agrupamos os dados por categoria de produto e forma de pagamento para calcular a receita total.
 
-'''python
+python
+Copiar código
 categoria_receita = data.groupby('Category')['Final_Price(Rs.)'].sum().sort_values(ascending=False)
 metodos_pagamento_receita = data.groupby('Payment_Method')['Final_Price(Rs.)'].sum().sort_values(ascending=False)
-Visualizações
+6. Visualizações
 Criamos gráficos para visualização da receita por categoria e por método de pagamento, além da receita mensal.
 
-'''python
+python
+Copiar código
 categoria_receita.plot(kind='bar', color='skyblue', figsize=(10, 6))
 metodos_pagamento_receita.plot(kind='bar', color='lightgreen', figsize=(10, 6))
-Cálculo da Receita Mensal
+7. Cálculo da Receita Mensal
 Calculamos a receita mensal, agrupando os dados por mês e somando as vendas.
 
-'''python
+python
+Copiar código
 data['Month'] = data['Purchase_Date'].dt.to_period('M')
 receita_mensal = data.groupby('Month')['Final_Price(Rs.)'].sum()
 receita_mensal.plot(kind='line', color='orange', figsize=(10, 6))
