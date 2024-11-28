@@ -2,127 +2,82 @@
 "Análise de Tendências de Vendas em E-commerce: Como Categoria e Pagamento Impactam a Receita" Estudo realizado para aprendizado de análise de dados.
 
 
-1. Importação de Bibliotecas
-python
-Copiar código
-import pandas as pd
-import matplotlib.pyplot as plt
-Explicação:
+# Análise de Vendas em E-commerce
 
-Pandas é utilizado para manipulação e análise de dados.
-Matplotlib é utilizado para criar gráficos e visualizações dos resultados.
-2. Carregar o Dataset
-python
-Copiar código
-data = pd.read_csv('ecommerce_dataset_updated.csv')
-Explicação:
+## Descrição
 
-A função pd.read_csv é utilizada para carregar o dataset no formato CSV para um DataFrame do Pandas. Essa etapa é importante para começarmos a trabalhar com os dados.
-3. Visualizar as Primeiras Linhas do Dataset
+Este projeto tem como objetivo realizar uma análise exploratória dos dados de vendas de um e-commerce, buscando insights sobre o comportamento de compra dos usuários, a performance das categorias de produtos, e a contribuição dos diferentes métodos de pagamento para a receita total. A análise é feita utilizando a linguagem Python, com foco na exploração de dados, limpeza de dados, visualizações e geração de insights para um entendimento mais profundo das métricas de vendas.
+
+## Objetivos do Projeto
+
+1. **Carregar e Limpar os Dados**: Importar o dataset, tratar valores ausentes, duplicados e garantir que os tipos de dados estejam corretos.
+2. **Análise Exploratória de Dados (EDA)**: Analisar as distribuições de preços, categorias e formas de pagamento, e entender como esses elementos influenciam as vendas.
+3. **Geração de Insights**: Fornecer insights sobre as categorias mais lucrativas, formas de pagamento mais comuns, e a receita mensal.
+4. **Visualizações**: Criar gráficos informativos para facilitar a interpretação dos dados e os resultados da análise.
+
+## Bibliotecas Utilizadas
+
+- **pandas**: Para manipulação e análise de dados.
+- **matplotlib**: Para criação de gráficos e visualizações.
+
+## Estrutura do Projeto
+
+O projeto é estruturado em várias etapas, que são detalhadas abaixo:
+
+1. **Carregar as Bibliotecas e o Dataset**  
+   Inicializamos as bibliotecas necessárias e carregamos o dataset CSV.
+
+   ```python
+   import pandas as pd
+   import matplotlib.pyplot as plt
+
+   # Carregar o dataset
+   data = pd.read_csv('ecommerce_dataset_updated.csv')
+Visualização Inicial do Dataset
+Exibimos as primeiras linhas e as informações gerais do dataset para entender melhor sua estrutura.
+
 python
 Copiar código
 data.head()
-Explicação:
-
-data.head() exibe as primeiras 5 linhas do dataset. Isso ajuda a dar uma olhada inicial nas informações contidas e entender a estrutura do dataset.
-4. Informações Gerais do Dataset
-python
-Copiar código
 data.info()
-Explicação:
+Limpeza de Dados
+Verificamos e tratamos valores ausentes e duplicados. Também garantimos que os nomes das colunas estejam limpos, sem espaços adicionais.
 
-data.info() exibe informações sobre as colunas do dataset, como o tipo de dado e a quantidade de valores não nulos. Isso é útil para verificar se há colunas com valores ausentes.
-5. Limpeza de Dados
-5.1. Verificar Valores Ausentes
 python
 Copiar código
-data.isnull().sum()
-Explicação:
+data.isnull().sum()  # Verificar valores ausentes
+data.duplicated().sum()  # Verificar valores duplicados
+data = data.drop_duplicates()  # Remover duplicados
+data.columns = data.columns.str.strip()  # Remover espaços nas colunas
+Ajuste de Formatos de Colunas
+Convertimos as colunas de data para o formato datetime para garantir que possamos manipulá-las corretamente.
 
-isnull() verifica se há valores ausentes no dataset. A função sum() retorna o total de valores ausentes por coluna.
-5.2. Remover Valores Duplicados
-python
-Copiar código
-data = data.drop_duplicates()
-Explicação:
-
-drop_duplicates() remove qualquer linha duplicada do DataFrame, garantindo que os dados usados nas análises sejam únicos.
-5.3. Remover Espaços em Branco nos Nomes das Colunas
-python
-Copiar código
-data.columns = data.columns.str.strip()
-Explicação:
-
-Remove os espaços extras no início ou no final dos nomes das colunas. Isso é importante para evitar problemas ao acessar as colunas do DataFrame.
-6. Conversão de Formatos de Data
 python
 Copiar código
 data['Purchase_Date'] = pd.to_datetime(data['Purchase_Date'], format='%d-%m-%Y')
-Explicação:
+Análise de Receita por Categoria e Forma de Pagamento
+Agrupamos os dados por categoria de produto e forma de pagamento para calcular a receita total.
 
-pd.to_datetime() converte a coluna Purchase_Date para o formato datetime para que possamos manipulá-la de forma mais eficiente. O parâmetro format='%d-%m-%Y' especifica o formato da data no dataset.
-7. Análise Exploratória de Dados (EDA)
-7.1. Análise de Receita por Categoria
 python
 Copiar código
 categoria_receita = data.groupby('Category')['Final_Price(Rs.)'].sum().sort_values(ascending=False)
-Explicação:
-
-groupby('Category') agrupa os dados pela categoria.
-['Final_Price(Rs.)'].sum() soma a receita para cada categoria.
-sort_values(ascending=False) ordena as categorias pela receita, da maior para a menor.
-7.2. Visualização de Receita por Categoria
-python
-Copiar código
-categoria_receita.plot(kind='bar', color='skyblue', edgecolor='black', figsize=(10,6))
-plt.title('Receita por Categoria', fontsize=16)
-plt.xlabel('Categoria', fontsize=12)
-plt.ylabel('Receita Total (Rs.)', fontsize=12)
-plt.xticks(rotation=45)
-plt.show()
-Explicação:
-
-O gráfico de barras permite visualizar de forma clara qual categoria gerou mais receita.
-8. Análise de Receita por Método de Pagamento
-python
-Copiar código
 metodos_pagamento_receita = data.groupby('Payment_Method')['Final_Price(Rs.)'].sum().sort_values(ascending=False)
-Explicação:
+Visualizações
+Criamos gráficos para visualização da receita por categoria e por método de pagamento, além da receita mensal.
 
-Aqui, estamos agrupando os dados pelo método de pagamento e somando a receita para cada método.
-8.1. Visualização de Receita por Método de Pagamento
 python
 Copiar código
-metodos_pagamento_receita.plot(kind='bar', color='lightgreen', edgecolor='black', figsize=(10, 6))
-plt.title('Receita por Método de Pagamento', fontsize=16)
-plt.xlabel('Método de Pagamento', fontsize=12)
-plt.ylabel('Receita Total (Rs.)', fontsize=12)
-plt.xticks(rotation=45)
-plt.show()
-Explicação:
+categoria_receita.plot(kind='bar', color='skyblue', figsize=(10, 6))
+metodos_pagamento_receita.plot(kind='bar', color='lightgreen', figsize=(10, 6))
+Cálculo da Receita Mensal
+Calculamos a receita mensal, agrupando os dados por mês e somando as vendas.
 
-O gráfico de barras mostra quais métodos de pagamento são mais utilizados e qual geraram mais receita.
-9. Receita Mensal
 python
 Copiar código
-data['Year-Month'] = data['Purchase_Date'].dt.to_period('M')
-receita_mensal = data.groupby('Year-Month')['Final_Price(Rs.)'].sum()
-Explicação:
-
-Criamos uma coluna Year-Month para agrupar os dados por mês e calcular a receita mensal.
-9.1. Visualização de Receita Mensal
-python
-Copiar código
-plt.figure(figsize=(12, 6))
-receita_mensal.plot(kind='line', color='skyblue', marker='o', linestyle='-', linewidth=2)
-plt.title('Receita Mensal', fontsize=16)
-plt.xlabel('Ano-Mês', fontsize=12)
-plt.ylabel('Receita Total (Rs.)', fontsize=12)
-plt.xticks(rotation=45)
-plt.grid(True)
-plt.show()
-Explicação:
-
-O gráfico de linha mostra como a receita varia ao longo dos meses, ajudando a identificar padrões sazonais.
-Conclusão
-Com esse projeto, eu aprendi a realizar a limpeza de dados, aplicar técnicas de análise exploratória, gerar visualizações e realizar a conversão de tipos de dados de forma eficaz. 
+data['Month'] = data['Purchase_Date'].dt.to_period('M')
+receita_mensal = data.groupby('Month')['Final_Price(Rs.)'].sum()
+receita_mensal.plot(kind='line', color='orange', figsize=(10, 6))
+Resultados Obtidos
+Categorias Mais Lucrativas: Identificação das categorias de produtos que mais geraram receita.
+Métodos de Pagamento: Análise dos métodos de pagamento mais utilizados e a contribuição de cada um para a receita total.
+Receita Mensal: Visualização da receita mensal, permitindo identificar picos de vendas ou períodos com menor performance.
