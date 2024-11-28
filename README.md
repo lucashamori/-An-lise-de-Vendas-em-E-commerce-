@@ -29,13 +29,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 ```
 
-### 2. Carregar o dataset
+### 1. Carregar o dataset
 ```python
 data = pd.read_csv('ecommerce_dataset_updated.csv')
-2. Visualização Inicial do Dataset
 ```
 
-#Exibimos as primeiras linhas e as informações gerais do dataset para entender melhor sua estrutura.
+### 2. Visualização Inicial do Dataset
+Exibimos as primeiras linhas e as informações gerais do dataset para entender melhor sua estrutura.
 
 ```python
 data.head()
