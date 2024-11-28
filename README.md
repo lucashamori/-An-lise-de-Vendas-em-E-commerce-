@@ -86,12 +86,15 @@ receita_mensal = data.groupby('Month')['Final_Price(Rs.)'].sum()
 receita_mensal.plot(kind='line', color='orange', figsize=(10, 6))
 ```
 
-Resultados Obtidos
-Categorias Mais Lucrativas: Identificação das categorias de produtos que mais geraram receita.
-Métodos de Pagamento: Análise dos métodos de pagamento mais utilizados e a contribuição de cada um para a receita total.
-Receita Mensal: Visualização da receita mensal, permitindo identificar picos de vendas ou períodos com menor performance.
+## Resultados Obtidos
+### Categorias Mais Lucrativas:
+Identificação das categorias de produtos que mais geraram receita.
+### Métodos de Pagamento: 
+Análise dos métodos de pagamento mais utilizados e a contribuição de cada um para a receita total.
+### Receita Mensal: 
+Visualização da receita mensal, permitindo identificar picos de vendas ou períodos com menor performance.
 
 
-Considerações Finais
+## Considerações Finais
 Este projeto demonstra o uso de análise exploratória de dados (EDA) para um conjunto de dados de vendas em e-commerce. Ele pode ser utilizado para melhorar a compreensão dos padrões de vendas, otimizar estratégias de marketing e pagamento, e fornecer insights para aumentar a rentabilidade de uma plataforma de e-commerce.
 
